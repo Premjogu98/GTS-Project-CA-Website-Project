@@ -1,0 +1,194 @@
+.top-nav{
+    padding: 6px;
+}
+.mid-nav{
+    background: #4e9525 !important;
+    padding: 9px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+.main-nav{
+    text-align: center;
+}
+.company-logo-d{
+    text-align: center;
+}
+.fa {
+    padding: 11px;
+    font-size: 30px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 0px;
+    border-radius: 50%;
+    width: 40px;
+    color:white;
+    
+  }
+.fa:hover {
+    /* opacity: 0.7; */
+    color:white;
+    cursor: pointer;
+    text-decoration: none;
+    background: #4e9525;
+    border-color: #4e9525;
+    transition: all 0.4s ease;
+}
+.fa-facebook{
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #0000007a;
+}
+.fa-twitter{
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #0000007a;
+}
+.fa-linkedin{
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #0000007a;
+}
+.fa-google{
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #0000007a;
+}
+
+
+.fa-envelope{
+    font-size: 13px;
+}
+.social-media-icon{
+    text-align: end;
+}
+.fa-mobile-phone{
+    color:white;
+    font-size: 20px;
+}
+.contact-d{
+    margin: 11px;
+}
+.number-d{
+    text-decoration: none;
+    color:#4e9525 !important;
+}
+.number-d:hover{
+    text-decoration: none;
+
+}
+a:hover{
+    text-decoration: none;
+}
+.nav-items{
+    display: inline;
+  }
+.nav-items a{
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    opacity: 1 !important;
+    color: white;
+    text-decoration: none;
+    transition: all 0.4s ease;
+}
+.nav-ul{
+    margin-top: 12px;
+}
+.nav-items a:hover{
+    text-decoration: none;
+    color:#fbd341;
+}
+.footer-d{
+    font-size: 16px;
+    background: #252525;
+    padding: 5em 0 3em 0;
+}
+.foot-company-discrip p{
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+.foot-company-logo h3{
+    color:white;
+}
+.foot-contactus h4{
+    color: white;
+    margin-left: 13px;
+}
+.contact-address:hover{
+    color:  #4e9525 !important;
+    cursor:pointer;
+    margin-left: 5px;
+}
+.contact-address, .contact-no, .company-email, .foot-quick-items a{
+    text-decoration: none;
+    color:white;
+    transition: all 0.2s ease;
+}
+.contact-no:hover{
+    text-decoration: none;
+    color:#4e9525 !important;
+    margin-left: 5px;
+}
+.company-email:hover{
+    color:#4e9525 !important;
+    text-decoration: none;
+    margin-left: 5px;
+}
+.foot-quick-links-d{
+    list-style: none;
+    padding: 0;
+}
+.foot-quick-items a:hover{
+    color:#4e9525 !important;
+    text-decoration: none;
+    margin-left: 5px;
+}
+.foot-quick-items{
+    margin-bottom: 10px;
+}
+.foot-quick-link{
+    margin-bottom: 16px;
+    margin-top: 10px;
+    border-bottom: 1px solid #4e9525 !important;
+}
+.foot-quick-link h4{
+    color:white;
+}
+.foot-follow-on h4{
+    color:white;
+}
+.foot-follow-on{
+    margin-bottom: 16px;
+    margin-top: 10px;
+    border-bottom: 1px solid #4e9525 !important;
+}
+.foot-contactus{
+    margin-bottom: 16px;
+    margin-top: 10px;
+    border-bottom: 1px solid #4e9525 !important;
+}
+.foot-company-logo{
+    margin-top: 10px;
+    margin-bottom: 16px;
+}
+#register-btn{
+    background-color: white;
+    border: 3px solid white;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    transition: all 0.4s ease;
+}
+#register-btn:hover{
+    background-color: #008410;
+    border: 3px solid #008410;
+    color: white;
+    border-radius: 0px;
+}
