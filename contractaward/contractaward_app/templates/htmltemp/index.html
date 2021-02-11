@@ -2,21 +2,85 @@
 {% load static %}
 {% block title %} Home {% endblock %}
 
-{% block head %} {% endblock %}
-
-{% block body %}
-<div>
-    <h1>test</h1>
-    <h1>test</h1>
-    <h1>test</h1>
-    <h1>test</h1>
-    <h1>test</h1>
-    <h1>test</h1>
-    <h1>test</h1>
-    <h1>test</h1>
-    <h1>test</h1>
-    <h1>test</h1>
-</div>
+{% block head %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/select2-bootstrap4.min.css' %}">
+<style>
+    .banner{
+        background: url("{% static 'images/home-banner-new-2.jpg'%}");
+        background-position: center center;
+        background-size: cover;
+        margin-top: -15px;
+        }
+</style>
 {% endblock %}
 
-{% block script %} {% endblock %}
+{% block body %}
+<div class="banner">
+    <div class="clearfix"></div>
+    <div class="heading-title-d">
+        <h1>Global Tenders, RFP, E-Procurement Notices Worth Millions</h1>
+        <p>No upfront and costly annual subscription charges.</p>
+        <form>
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-12 col-lg-1"></div>
+                    <div class="col-12 col-lg-11">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <select class="js-example-basic-multiple" name="regions[]" multiple="multiple">
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="two" disabled="disabled">Second</option>
+                                </select>
+                            </div>
+                            <span class="select-seprator"></span>
+                            <input id="select-keyword-d" placeholder="Keyword">
+                            <span style="margin-left: 10px;"><button id="reg-coun-key-btn-d">Search</button></span>
+                            
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-2"></div> -->
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-12">
+            
+        </div>
+        <div class="col-sm">
+            <!-- One of three columns -->
+        </div>
+        <div class="col-sm">
+            <!-- One of three columns -->
+        </div>
+    </div>
+</div>
+
+<div>
+    <h1>Hey dude 2</h1>
+</div>
+<script src="{% static 'js/select2.full.min.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function() {
+    $('.js-example-basic-multiple').select2({
+        placeholder: "Region / Country"
+    });
+    
+});
+</script>
+<script>
+$(document).ready(function(){
+    $(".select2-container--default").css({"font-size": "15px", "text-align": "left","width":"381px","outline":"none","margin-bottom": "10px"});
+    $(".select2-search__field").css({"height": "30px", "padding": "5px 0px 0px 9px","outline":"none","width":"100%"});
+});
+</script>
+ {% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'htmltemp/re_use_temp.html' %}
+{% load static %}
+
+{% block title %} {{tender_title}} {% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<section class="tenders-section">
+    <div class="container">
+        
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-lg-10"><h3 class="tender-detail-title">{{fetch_tender_detail.0.1}}</h3> </div>
+            <div class="col-12 col-lg-2"><a href="#" class="data-view-btn">Download</a></div>
+            <div class="col-12 col-lg-7">
+                <div class="">
+                    <p class="info-Title">Procurement Summary</p>
+                    <p class="td-add-info-p">{{fetch_tender_detail.purch_country}}</p>
+                    
+                </div>
+            </div>
+            <div class="col-12 col-lg-5"></div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

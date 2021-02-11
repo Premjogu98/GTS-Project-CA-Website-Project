@@ -1,0 +1,333 @@
+{% extends 'htmltemp/re_use_temp.html' %}
+{% load static %}
+{% block title %} Contact Us {% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/select2-bootstrap4.min.css' %}"> -->
+<style type="text/css">
+    .is-invalid {
+        border-color: #dc3545;
+        padding-right: 2.25rem;
+        background-repeat: no-repeat;
+        background-position: right calc(.375em + .1875rem) center;
+        background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+    }
+    .is-invalid~.invalid-feedback, .is-invalid~.invalid-tooltip, .was-validated :invalid~.invalid-feedback, .was-validated :invalid~.invalid-tooltip {
+    display: block;
+    }
+    .invalid-feedback {
+        display: none;
+        width: 100%;
+        margin-top: .25rem;
+        font-size: 80%;
+        color: #dc3545;
+    }
+    #RegistrationForm span{
+        font-size: 13px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="after-reg-error-section">
+    <div class="alert alert-warning alert-dismissible fade show error-alert" role="alert">
+       
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+</section>
+<section class="contact-section">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-12">
+                <div class="contact-mid-d">
+                    <div class="row">
+                        <div class="col-12 col-lg-7" data-aos="fade-right"data-aos-anchor="#example-anchor"data-aos-offset="500"data-aos-duration="500">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001351.4452799778!2d-78.01324860736484!3d42.72473683859135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sin!4v1612261481926!5m2!1sen!2sin" width="100%" height="100%" id="contact-map"frameborder="0" style="" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        </div>
+                        <div class="col-12 col-lg-5 log-form-d" data-aos="fade-left"data-aos-anchor="#example-anchor"data-aos-offset="0"data-aos-duration="700">
+                            <div class="row">
+                                <div class="reg-title-d">
+                                    <h3>Get In Touch</h3>
+                                    <p>Fill out the form and we'll be in touch soon!</p>
+                                </div>
+                                <form id="contact-info-form" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group reg-group">
+                                        <input type="text" class="contact_name" id="contact_name" name="contact_name" placeholder="Full Name">
+                                        <label class="current_url" id="current_url" name="current_url" style="display: none;">{{ request.build_absolute_uri }}</label>
+                                    </div>
+                                    <div class="form-group reg-group">
+                                        <input type="email" class="contact_email" id="contact_email" name="contact_email" placeholder="Email Address">
+                                    </div>
+                                    <div class="form-group reg-group">
+                                        <input type="text" class="contact_number" id="contact_number" name="contact_number" placeholder="Phone Number">
+                                        <span class="reg-error-lbl con-num-error">Only Number you can add</span>
+                                    </div>
+                                    <div class="form-group reg-group">
+                                        <select class="form-control select2" id="user_contact_country" name="user_contact_country" style="width: 100%;">
+                                            <option selected="selected">Country</option>
+                                            {% for country_detail in country_drop %}
+                                                <option value="{{ country_detail.0 }}">{{ country_detail.1 }}</option>
+                                            {% endfor %}
+                                          </select>
+                                    </div>
+                                    <div class="form-group reg-group">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <input type="text" class="contact_captcha" id="contact_captcha" name="contact_captcha" placeholder="Captcha">
+                                                <span class="reg-error-lbl captcha-error">Invalid Captcha</span>
+                                            </div>
+                                            <div class="col-4" style="padding: 0;">
+                                                <canvas id="contact-canvas" width="200" height="100"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group reg-group">
+                                        <textarea rows="6" class="contact_user_message" id="contact_user_message" name="contact_user_message" placeholder="Message"></textarea>
+                                    </div>
+                                    <div class="reg-group login-btn-d">
+                                        <button type="button" class="" id="send_message_btn">Ṣend Message</button>
+                                    </div>
+                                    <div class="reg-group reg-bottom-d">
+                                        <span><label class="contact-error error-label"></label></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="contact-top-d">
+    <div class="row" style="margin:0">
+        <div class="col-12 col-lg-3" data-aos="zoom-in-down"data-aos-anchor="#example-anchor"data-aos-offset="0"data-aos-duration="1200">
+            <div class="contact-detail-1" >
+                <div>
+                    <i class="fa fa-map-o" style="font-size:36px;margin-left: -20px;"></i>
+                    <p class="con-p-title">Contact Address</p>
+                    <p class="con-p-detail">Rasaz, Mira Rd, District Thane (MH), India</p>
+                </div>
+            </div> 
+        </div>
+        <div class="col-12 col-lg-3" data-aos="zoom-in-down"data-aos-anchor="#example-anchor"data-aos-offset="0"data-aos-duration="1100">
+            <div class="contact-detail-2">
+                <div>
+                    <i class="fa fa-phone" style="font-size:36px;margin-left: -20px;"></i>
+                    <p class="con-p-title">Telephone Number</p>
+                    <span class="con-p-detail">Tel: <a href="tel:+918828033306">+91-88280 33306</a></span>
+                </div>
+            </div> 
+        </div>
+        <div class="col-12 col-lg-3" data-aos="zoom-in-down"data-aos-anchor="#example-anchor"data-aos-offset="0"data-aos-duration="1000">
+            <div class="contact-detail-1" >
+                <div>
+                    <i class="fa fa-envelope-o" style="font-size:36px;margin-left: -20px;"></i>
+                    <p class="con-p-title">Email Us</p>
+                    <span class="con-p-detail"><a href="mailto:info@defencetenders.com">info@defencetenders.com</a></span>
+                </div>
+            </div> 
+        </div>
+        <div class="col-12 col-lg-3" data-aos="zoom-in-down"data-aos-anchor="#example-anchor"data-aos-offset="0"data-aos-duration="900">
+            <div class="contact-detail-2" >
+                <div>
+                    <i class="fa fa-mobile-phone" style="font-size:45px;margin-left: -20px;"></i>
+                    <p class="con-p-title">Chat With Us</p>
+                    <span class="con-p-detail">Mobile: <a href="tel:+918828033306">+91-88280 33306</a></span>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.9.0/jquery.validate.min.js"></script>
+<!-- Select2 -->
+<script src="{% static 'js/select2.full.min.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+<script>
+    var canvas = document.getElementById("contact-canvas");
+    var ctx=canvas.getContext("2d");
+    ctx.font="40px Comic Sans MS";
+    ctx.fillStyle = ":#ff8000";
+    ctx.textAlign = "center";
+    ctx.fillText("{{captcha_number}}", canvas.width/2, canvas.height/1.5);
+</script>
+<script>
+    $(document).ready(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+        theme: 'bootstrap4'
+        })
+        
+    });
+</script>
+<script>
+    function contact_info(){
+        
+        var input_captcha_text = $('#contact_captcha').val();
+        var reg_number = $('#contact_number').val();
+
+        if(input_captcha_text.indexOf("{{captcha_number}}") == -1){
+            $(".captcha-error").css({"display":"block"});
+            setTimeout(function(){$(".captcha-error").css({"display":"none"});}, 5000); 
+        }else if (isNaN(reg_number)){
+            $(".con-num-error").css({"display":"block"});
+            setTimeout(function(){$(".con-num-error").css({"display":"none"});}, 5000);
+        }
+        else{
+            $("#send_message_btn").html('Please wait ...');
+            $.ajax({
+                type:"POST",
+                url:"{% url 'Contact-Us-Page' %}",
+                data:{
+                    contact_name:$.trim($('#contact_name').val()),
+                    contact_email:$.trim($('#contact_email').val()),
+                    contact_number:$.trim($('#contact_number').val()),
+                    user_contact_country:$.trim($('#user_contact_country').val()),
+                    contact_user_message:$.trim($('#contact_user_message').val()),
+                    current_url:$.trim($('#current_url').text()),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success:function(return_data){
+                    if(return_data == 'done')
+                    {
+                        $("#send_message_btn").html('Ṣend Message');
+                        $(".reg-section").css({"display":"none"});
+                        $(".after-reg-section").css({"display":"block"});
+                        clear_form_elements('contact-info-form')
+                        $('#user_contact_country').prop('selectedIndex',0);
+
+                        $( ".reg-bottom-d" ).slideDown( "slow", function() {
+                            $(".error-label").css({"display":"block","color":"green"});
+                            $(".error-label").html('Details Save Successfully !!!');
+                        });
+                    }
+                    else
+                    {
+                        $("#send_message_btn").html('Ṣend Message');
+                        $( ".reg-bottom-d" ).slideDown( "slow", function() {
+                            $(".error-label").css({"display":"block"});
+                            $(".error-label").html(return_data);
+                        });
+                        setTimeout(function(){$(".reg-bottom-d").slideUp("slow");}, 10000);
+                        $(".reg-bottom-d").css({"display":"none"});
+                        $(".error-label").css({"display":"none"});
+                        
+                    }
+                    
+                }
+            });
+        }
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        // clear_form_elements("login-form");
+        
+        $('#contact-info-form').validate({
+            rules: 
+            {
+                contact_name: {
+                    required: true,
+                },
+                contact_email: {
+                    required: true,
+                    email: true
+                },
+                contact_number: {
+                    required: true,
+                },
+                user_contact_country: 
+                {
+                    required: true
+                },
+                contact_captcha: {
+                    required: true,
+                },
+                contact_user_message: {
+                    required: true,
+                }
+            },
+            messages: 
+            {   
+                contact_name: {
+                    required: "*This fields required",
+                },
+                contact_email: {
+                    required: "*This fields required",
+                    email: "*Please enter a vaild email address."
+                },
+                contact_number: {
+                    required: "*This fields required",
+                },
+                user_contact_country: {
+                    required: "*This fields required",
+                },
+                contact_captcha: {
+                    required: "*This fields required",
+                }
+                ,
+                contact_user_message: {
+                    required: "*This fields required",
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+        
+        $('#send_message_btn').on('click', function (e){
+            e.preventDefault(); // important thing block to refresh page
+            if ($('#contact-info-form').valid()) 
+            {
+                contact_info(); 
+            }
+            
+        });
+    
+    });
+    function clear_form_elements(id) {
+  jQuery("#"+id).find(':input').each(function() {
+    switch(this.type) {
+        case 'password':
+        case 'text':
+        case 'textarea':
+        case 'file':
+        // case 'select-one':
+        // case 'select-multiple':
+        case 'date':
+        case 'number':
+        case 'tel':
+        case 'email':
+  case 'hidden':
+            jQuery(this).val('');
+            break;
+        case 'checkbox':
+        case 'radio':
+            this.checked = false;
+            break;
+    }
+  });
+}
+</script>
+<script>
+    $(document).ready(function(){
+        clear_form_elements('contact-info-form')
+});
+</script>
+{% endblock %}

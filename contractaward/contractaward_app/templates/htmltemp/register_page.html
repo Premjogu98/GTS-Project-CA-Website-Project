@@ -1,0 +1,355 @@
+{% extends 'htmltemp/re_use_temp.html' %}
+{% load static %}
+{% block title %} Register and Get Absolutely Free Summary of Tenders {% endblock %}
+{% block head %}
+<!-- Select2 -->
+<link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/select2-bootstrap4.min.css' %}"> -->
+<style type="text/css">
+    .is-invalid {
+        border-color: #dc3545;
+        padding-right: 2.25rem;
+        background-repeat: no-repeat;
+        background-position: right calc(.375em + .1875rem) center;
+        background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+    }
+    .is-invalid~.invalid-feedback, .is-invalid~.invalid-tooltip, .was-validated :invalid~.invalid-feedback, .was-validated :invalid~.invalid-tooltip {
+    display: block;
+    }
+    .invalid-feedback {
+        display: none;
+        width: 100%;
+        margin-top: .25rem;
+        font-size: 80%;
+        color: #dc3545;
+    }
+    #RegistrationForm span{
+        font-size: 13px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<!-- {% csrf_token %} -->
+<section class="after-reg-error-section">
+    <div class="alert alert-warning alert-dismissible fade show error-alert" role="alert">
+       
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+</section>
+
+<section class="after-reg-section">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-lg-10 after-reg-d">
+                <h1>Your Registration Is Successfully Done !!! </h1>
+                <h4>Please <a href="#">Click Here</a> To Login </h4>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="reg-section">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-10">
+                <div class="register-mid-d">
+                    <div class="row row-mange">
+                        <div class="col-12 col-lg-7">
+                            <div class="res-detail-d" data-aos="fade-right"data-aos-anchor="#example-anchor"data-aos-offset="0"data-aos-duration="700">
+                                <div class="banner-op-d"><label>Register</label></div>
+                                <div class="regi-detail-banner"><img src="{% static 'images/register-banner.jpg'%}" alt="Nature" class="responsive" width="100%" height="auto"></div>
+                                <div class="reg-detail-d">
+                                    <div class="row row-mange">
+                                        <div class="col-lg-12">
+                                            <label class="why-reg-lbl">Why To Register ?</label>
+                                        </div>
+                                        <div class="register-card">
+                                            <div class="row row-mange" style="margin: 0;">
+                                                <div class=" col-3 col-md-3">
+                                                    <div class="reg-icn">
+                                                        <i class="fa fa-clock-o" style="font-size:36px; margin-left: -14px;"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 col-md-8">
+                                                    <h4 class="reg-info">Quick Response Time</h4>
+                                                    <div class="reg-par">
+                                                        <p>
+                                                            4 Hours. Yes, that's the time within which you receive the tenders/RFP published in any part of the World.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="register-card">
+                                            <div class="row row-mange" style="margin: 0;">
+                                                <div class="col-3 col-md-3">
+                                                    <div class="reg-icn">
+                                                        <i class="fa fa-thumbs-o-up" style="font-size:36px; margin-left: -14px;"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 col-md-8">
+                                                    <h4 class="reg-info">Easy to Use</h4>
+                                                    <div class="reg-par">
+                                                        <p>
+                                                            Search - View - Refine - Save. It’s so simple. Change your preferences yourself at any point of time.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="register-card">
+                                            <div class="row row-mange" style="margin: 0;">
+                                                <div class=" col-3 col-md-3">
+                                                    <div class="reg-icn">
+                                                        <i class="fa fa-dollar" style="font-size:36px;"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 col-md-8">
+                                                    <h4 class="reg-info">Cost Effective</h4>
+                                                    <div class="reg-par">
+                                                        <p>
+                                                            Avoid costly annual subscriptions. Get info on Government contracts worth Millions at just 1 USD/ Tender.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-5" data-aos="fade-left"data-aos-anchor="#example-anchor"data-aos-offset="0"data-aos-duration="700">
+                            <div class="reg-title-d">
+                                <h3>Register Now</h3>
+                            </div>
+                            <div class="col-lg-12 log-form-d">
+                                <div class="row">
+                                    <form id="reg-form" method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-group reg-group">
+                                            <input type="text" class="" id="reg_name" name="reg_name" placeholder="Full Name">
+                                            
+                                        </div>
+                                        <div class="form-group reg-group">
+                                            <input type="email" class="" id="reg_email" name="reg_email" placeholder="Email Address">
+                                        </div>
+                                        <div class="form-group reg-group">
+                                            <input type="text" class="" id="reg_number" name="reg_number" placeholder="Contact Number">
+                                            <span class="reg-error-lbl con-num-error">Only Number you can add</span>
+                                        </div>
+                                        <div class="form-group reg-group">
+                                            <select class="form-control select2" id="reginputcountry" name="reginputcountry" style="width: 100%;">
+                                                <option selected="selected">Country</option>
+                                                {% for country_detail in country_drop %}
+                                                    <option value="{{ country_detail.0 }}">{{ country_detail.1 }}</option>
+                                                {% endfor %}
+                                              </select>
+                                            <input type="text" class="" id="" name="" placeholder="" style="display: none;">
+                                        </div>
+                                        <div class="form-group reg-group">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <input type="text" class="" id="reg_captcha" name="reg_captcha" placeholder="Captcha">
+                                                    <span class="reg-error-lbl captcha-error">Invalid Captcha</span>
+                                                </div>
+                                                <div class="col-4" style="padding: 0;">
+                                                    <canvas id="reg-canvas" width="200" height="100"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="reg-group login-btn-d">
+                                            <button type="button" id="register_btn">Register</button>
+                                        </div>
+                                        <div class="reg-group reg-bottom-d">
+                                            <span><label>Already have an account?</label><a href="{% url 'Login-Page' %}">Login</a></span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.9.0/jquery.validate.min.js"></script>
+<!-- Select2 -->
+<script src="{% static 'js/select2.full.min.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+<script>
+    var canvas = document.getElementById("reg-canvas");
+    var ctx=canvas.getContext("2d");
+    ctx.font="40px Comic Sans MS";
+    ctx.fillStyle = ":#ff8000";
+    ctx.textAlign = "center";
+    ctx.fillText("{{captcha_number}}", canvas.width/2, canvas.height/1.5);
+</script>
+<script>
+    $(document).ready(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+        theme: 'bootstrap4'
+        })
+        
+    });
+</script>
+<script>
+    function useregistration(){
+        
+        var input_captcha_text = $('#reg_captcha').val();
+        var reg_number = $('#reg_number').val();
+
+        if(input_captcha_text.indexOf("{{captcha_number}}") == -1){
+            $(".captcha-error").css({"display":"block"});
+            setTimeout(function(){$(".captcha-error").css({"display":"none"});}, 5000); 
+        }else if (isNaN(reg_number)){
+            $(".con-num-error").css({"display":"block"});
+            setTimeout(function(){$(".con-num-error").css({"display":"none"});}, 5000);
+        }
+        else{
+            $("#register_btn").html('Please Wait ...');
+            $.ajax({
+                type:"POST",
+                url:"{% url 'Register-Page' %}",
+                data:{
+                    reg_name:$.trim($('#reg_name').val()),
+                    reg_email:$.trim($('#reg_email').val()),
+                    reg_number:$.trim($('#reg_number').val()),
+                    reginputcountry:$.trim($('#reginputcountry').val()),
+                    reg_captcha:$.trim($('#reg_captcha').val()),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success:function(return_data){
+                    if(return_data == 'Data Register Successfully !!!')
+                    {   
+                        $("#register_btn").html('Register');
+                        $(".reg-section").css({"display":"none"});
+                        $(".after-reg-section").css({"display":"block"});
+                        clear_form_elements('reg-form')
+                    }
+                    else
+                    {
+                        $("#register_btn").html('Register');
+                        $( ".after-reg-error-section" ).slideDown( "slow", function() {
+                            $(".after-reg-error-section").css({"display":"block"});
+                            $(".error-alert").html("<strong>"+return_data+"</strong>");
+                        });
+                        setTimeout(function(){$(".after-reg-error-section").slideUp("slow");}, 10000);
+                        $(".after-reg-error-section").css({"display":"none"});
+                        
+                    }
+                    
+                }
+            });
+        }
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        // clear_form_elements("login-form");
+        
+        $('#reg-form').validate({
+            rules: 
+            {
+                reg_name: {
+                    required: true,
+                },
+                reg_email: {
+                    required: true,
+                    email: true
+                },
+                reg_number: {
+                    required: true,
+                },
+                reginputcountry: 
+                {
+                    required: true
+                },
+                reg_captcha: {
+                    required: true,
+                }
+            },
+            messages: 
+            {   
+                reg_name: {
+                    required: "*Please enter your full name.",
+                },
+                reg_email: {
+                    required: "*Please enter your emailid",
+                    email: "*Please enter a vaild email address."
+                },
+                reg_number: {
+                    required: "*Please enter your number.",
+                },
+                reginputcountry: {
+                    required: "*Please select country.",
+                },
+                reg_captcha: {
+                    required: "*Please fill captcha.",
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+        
+        $('#register_btn').on('click', function (e){
+            e.preventDefault(); // important thing block to refresh page
+            if ($('#reg-form').valid()) 
+            {
+                useregistration(); 
+            }
+            
+        });
+    
+    });
+    function clear_form_elements(id) {
+  jQuery("#"+id).find(':input').each(function() {
+    switch(this.type) {
+        case 'password':
+        case 'text':
+        case 'textarea':
+        case 'file':
+        // case 'select-one':
+        // case 'select-multiple':
+        case 'date':
+        case 'number':
+        case 'tel':
+        case 'email':
+  case 'hidden':
+            jQuery(this).val('');
+            break;
+        case 'checkbox':
+        case 'radio':
+            this.checked = false;
+            break;
+    }
+  });
+}
+</script>
+<script>
+    $(document).ready(function(){
+        clear_form_elements('reg-form')
+});
+</script>
+{% endblock %}

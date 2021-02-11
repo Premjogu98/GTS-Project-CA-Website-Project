@@ -1,0 +1,177 @@
+{% extends 'htmltemp/re_use_temp.html' %}
+{% load static %}
+{% block title %} Login Page {% endblock %}
+{% block head %}
+<style type="text/css">
+    .is-invalid {
+        border-color: #dc3545;
+        padding-right: 2.25rem;
+        background-repeat: no-repeat;
+        background-position: right calc(.375em + .1875rem) center;
+        background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+    }
+    .is-invalid~.invalid-feedback, .is-invalid~.invalid-tooltip, .was-validated :invalid~.invalid-feedback, .was-validated :invalid~.invalid-tooltip {
+    display: block;
+    }
+    .invalid-feedback {
+        display: none;
+        width: 100%;
+        margin-top: .25rem;
+        font-size: 80%;
+        color: #dc3545;
+    }
+    #RegistrationForm span{
+        font-size: 13px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<!-- {% csrf_token %} -->
+<section class="login-section">
+    <div class="container">
+        <div class='login-mid-d' data-aos="fade-left"data-aos-anchor="#example-anchor"data-aos-duration="700">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-5">
+                   <div class="login-card">
+                    <div class="log-title-d">
+                        <h3>Sign In</h3>
+                    </div>
+                    <div class="col-lg-12 log-form-d">
+                        <div class="row">
+                            <form id="login-form" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group log-group">
+                                    <input type="email" class="loginemail" id="loginemail" name="loginemail" placeholder="Email Address">
+                                    <!-- <label class="hidden-error-lbl-log-d">Enter your emai-id</label> -->
+                                </div>
+                                <div class="form-group log-group">
+                                    <input type="password" class="loginpass" id="loginpass" name="loginpass" placeholder="Password">
+                                    <!-- <label class="hidden-error-lbl-log-d">Enter your password</label> -->
+                                </div>
+                                <div class="log-group login-btn-d">
+                                    <h6 class="log-error-lbl"></h6>
+                                    <button type="button" class="" id="login-btn">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="hidden-error-lbl-log-d-1">
+                            <label>email id or password wrong</label>
+                        </div>
+                        <div class="log-bottom-fp-d">
+                            <a href="#">Forgot password</a>
+                        </div>
+                        <div class="log-bottom-su-d"><span><label>Don't have an account?</label><a href="{% url 'Register-Page' %}">Signup</a></span></div>
+                    </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+        
+      </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.9.0/jquery.validate.min.js"></script>
+{% endblock %}
+
+{% block script %}
+
+<script>
+    function userlogin(){
+        $.ajax({
+            type:"POST",
+            url:"{% url 'Login-Page' %}",
+            data:{
+                loginemail:$.trim($('#loginemail').val()),
+                loginpass:$.trim($('#loginpass').val()),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success:function(return_data){
+                if(return_data == 'done')
+                {
+                    window.location = "{% url 'Home' %}";
+                }
+                else
+                {
+                    $(".log-error-lbl").html(return_data);
+                    $(".log-error-lbl").css({"display":"block"});
+                    setTimeout(function(){$(".log-error-lbl").css({"display":"none"}).slideUp("slow");}, 5000);
+                }
+                
+            }
+        });
+    }
+</script>
+<script>
+    
+$(document).ready(function () {
+    $('#login-form').validate({
+        rules: 
+        {
+            loginemail: {
+                required: true,
+                email: true
+            },
+            loginpass: {
+                required: true,
+                
+            }
+        },
+        messages: 
+        {
+            loginemail: {
+                required: "*Please enter your Emailid",
+                email: "*Please enter a vaild email address."
+            },
+            loginpass: {
+                required: "*Please enter a password.",
+                
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+        });
+
+        $('#login-btn').on('click', function (e){
+            e.preventDefault();
+            if ($('#login-form').valid()) 
+            {
+                userlogin();
+            }
+        });
+
+    });
+    function clear_form_elements(id) {
+    jQuery("#"+id).find(':input').each(function() {
+        switch(this.type) {
+            case 'password':
+            case 'text':
+            case 'textarea':
+            case 'file':
+            case 'select-one':
+            case 'select-multiple':
+            case 'date':
+            case 'number':
+            case 'tel':
+            case 'email':
+    case 'hidden':
+                jQuery(this).val('');
+                break;
+            case 'checkbox':
+            case 'radio':
+                this.checked = false;
+                break;
+        }
+    });
+}
+</script>
+{% endblock %}
