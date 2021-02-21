@@ -88,6 +88,7 @@ DATABASES = {
         'PORT': "",
         'USER': 'ams',
         'PASSWORD': 'TgdRKAGedt%h',
+        'OPTIONS': { 'init_command': 'SET character_set_connection=utf8,collation_connection=utf8_unicode_ci' },
     }
 }
 

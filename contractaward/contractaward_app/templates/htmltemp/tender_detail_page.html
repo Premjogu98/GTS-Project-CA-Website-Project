@@ -1,9 +1,17 @@
 {% extends 'htmltemp/re_use_temp.html' %}
+{% load customfilters %}
 {% load static %}
 
-{% block title %} {{tender_title}} {% endblock %}
+{% block title %} {{fetch_tender_detail.0.short_descp}} {% endblock %}
 
 {% block head %}
+<!-- <script>
+    var myStr = 'quick_brown_fox';
+    var newStr = myStr.replace(/_/g, "-");
+    
+    // Insert modified string in paragraph
+    document.getElementsByTagName("p").replace("&lt;br&gt;", "-");
+</script> -->
 {% endblock %}
 
 {% block body %}
@@ -11,20 +19,63 @@
     <div class="container">
         
         <div class="row justify-content-center align-items-center">
-            <div class="col-12 col-lg-10"><h3 class="tender-detail-title">{{fetch_tender_detail.0.1}}</h3> </div>
+            <div class="col-12 col-lg-10"><h3 class="tender-detail-title">{{fetch_tender_detail.0.short_descp}}</h3> </div>
             <div class="col-12 col-lg-2"><a href="#" class="data-view-btn">Download</a></div>
-            <div class="col-12 col-lg-7">
-                <div class="">
-                    <p class="info-Title">Procurement Summary</p>
-                    <p class="td-add-info-p">{{fetch_tender_detail.purch_country}}</p>
+            <div class="col-12 col-lg-8">
+                <!-- <div class="ca-detail-card">
+                    <p class="additional-info">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+                </div> -->
+                <div class="ca-detail-card">
+                    <div class="inner-td-detail">
+                        <label class="info-Title">Location Details</label>
+                        <p class="add-info-p"><b>Project Location:</b> {{fetch_tender_detail.0.project_location_country}}</p>
+                    </div>
+                    <div class="inner-td-detail">
+                        <label class="info-Title">Procurement Summary</label>
+                        <p class="add-info-p"><b>Summary:</b> {{fetch_tender_detail.0.short_descp}}</p>
+                        <p class="add-info-p"><b>TOT Ref No:</b> {{ fetch_tender_detail.0.id }}</p>
+                    </div>
+                    <div class="inner-td-detail">
+                        <label class="info-Title">Purchaser Detail</label>
+                        <!-- <div><a class="td-detail-urls" href="#"> Need To Register</a></div> -->
+                        
+                        <p class="add-info-p purch_ref"><b>Purchaser Ref No:</b> {{fetch_tender_detail.0.ref_number}}</p>
+                        <p class="add-info-p purch_name"><b>Purchaser Name:</b> {{fetch_tender_detail.0.purchasername}}</p>
+                        <p class="add-info-p purch_add"><b>Purchaser Address:</b> {{ fetch_tender_detail.0.purchaseradd|change_tag }}</p>
+                        <p class="add-info-p purch_country"><b>Purchaser Country:</b> {{ fetch_tender_detail.0.purchaser_country }}</p>
+                        <p class="add-info-p purch_email"><b>Purchaser Email-ID: </b><a class="td-detail-urls" href="mailto:{{ fetch_tender_detail.0.purch_email }}">{{ fetch_tender_detail.0.purch_email }}</a></p>
+                        <p class="add-info-p purch_website"><b>Purchaser URL:</b> <a class="td-detail-urls" href="{{ fetch_tender_detail.0.purch_url }}">{{ fetch_tender_detail.0.purch_url }}</a></p>
+                    </div>
+                    <div class="inner-td-detail">
+                        <label class="info-Title">Supplier Detail</label>
+                        <!-- <div><a class="td-detail-urls" href="#"> Need To Register</a></div> -->
+                        <p class="add-info-p"><b>Supplier Name:</b> {{fetch_tender_detail.0.contractorname}}</p>
+                        <p class="add-info-p"><b>Supplier Address:</b> {{fetch_tender_detail.0.cont_add}}</p>
+                        <p class="add-info-p"><b>Supplier Country:</b> {{ fetch_tender_detail.0.contractor_country }}</p>
+                        <p class="add-info-p"><b>Supplier Email-ID:</b> <a class="td-detail-urls" href="mailto:{{ fetch_tender_detail.0.cont_email }}">{{ fetch_tender_detail.0.cont_email }}</a></p>
+                        <p class="add-info-p"><b>Supplier URL:</b><a class="td-detail-urls" href="mailto:{{ fetch_tender_detail.0.cont_url }}">{{ fetch_tender_detail.0.cont_url }}</a></p>
+                    </div>
+                    <div class="inner-td-detail">
+                        <label class="info-Title">Award Details</label>
+                        <!-- <div><a class="td-detail-urls" href="#"> Need To Register</a></div> -->
+                        <p class="add-info-p">{{fetch_tender_detail.0.award_detail}}</p>
+                    </div>
+                    <div class="regis-log-btns">
+                        <button class="reu-btn" id="reg-btn">Login</button>
+                        <button class="reu-btn" id="reg-btn">Register</button>
+                    </div>
+
                     
                 </div>
             </div>
-            <div class="col-12 col-lg-5"></div>
+            <div class="col-12 col-lg-4">
+                
+            </div>
         </div>
     </div>
 </section>
 {% endblock %}
 
 {% block script %}
+
 {% endblock %}

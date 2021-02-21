@@ -413,6 +413,30 @@ input[type="text"], input[type="password"], textarea, select,button {
 .login-btn-d button:focus { 
     outline: none;
 }
+.reu-btn{
+    box-shadow: none;
+    outline: none;
+    border: 1px solid #ff8000;
+    border-color:#ff8000;
+    background-color: #ff8000;
+    color: white;
+    width: 100px;
+    height: 35px;
+    border-radius: 20px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    transition: all 0.4s ease;
+    margin-left: 11px;
+}
+
+.reu-btn:hover{
+    /* border-color:1px solid #ff8000 ; */
+    background-color: white;
+    color:black;
+}
+.reu-btn:active,
+.reu-btn:focus { 
+    outline: none;
+}
 .login-mid-d{
     padding-top: 30px;
     padding-bottom: 60px;
@@ -807,4 +831,85 @@ text-decoration: none;
 .data-view-btn:active,
 .data-view-btn:focus { 
     outline: none;
+}
+.info-Title{
+    font-size: 20px;
+    font-weight: 600;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 13px;
+}
+.add-info-p b{
+    font-weight: 400;
+    font-family: 'Titillium Web', sans-serif;
+    color: black;
+    font-size: 14px;
+}
+.add-info-p{
+    font-size: 14px;
+    color: black;
+    font-family: 'Titillium Web', sans-serif;
+}
+ul,#treeUL {
+    list-style-type: none;
+}
+#treeUL {
+    margin: 0;
+    padding: 0;
+}
+
+.rootTree {
+    cursor: pointer;
+    user-select: none;
+    font-size: 18px;
+    font-weight: 400;
+    color: black;
+}
+.rootmain{
+    font-weight: 600;
+}
+.treelimain,.treelisub,.treelichild {
+    font-size: 16px;
+    color: black;
+}
+.rootTree::before {
+    content: ' \002B';
+    color: white;
+    display: inline-block;
+    margin-right: 6px;
+    background-color:#ff8000;
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    text-align: center;
+    margin: 5px 8px;
+}
+.rootTree-down::before {
+    content: ' \002D';
+}
+.children {
+    display: none;
+}
+.active {
+    display: block;
+}
+.td-filter-main{
+    border-radius: 10px;
+    box-shadow: -1px 3px 17px 9px #efefef;
+}
+.td-filter-header{
+    background-color: orange;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 11px 0px;
+    text-align: center;
+}
+.td-filter-header label{
+    font-size: 20px;
+    font-weight: 400;
+}
+.td-filter-regions{
+    padding: 20px 20px;
 }
