@@ -11,13 +11,13 @@
 <section class="tenders-section">
     <div class="container">
         <div>
-            <div class="row justify-content-center align-items-center">
+            <div class="row align-items-start">
                 <div class="col-12 col-lg-8">
-                    <h4 class="tenders-heading-lbl-d">Tenders By Region/Country</h4>
-                    <div>
-                        <p>
-                            Tendersontime follows ISO-3166 to classify the countries and geographical regions or the continents. International tenders from all these regions are collected from different primary sources like: Daily newspapers, purchaser's website, tender board websites, and public procurement regulatory authorities. Tendersontime covers all three types of procurement categories viz: Supply tenders or Goods tenders, Works tenders and Service tenders (this also includes consultancy tenders). Register to get a Free Trial of one week.
-                        </p>
+                    <div class="discip-top-d">
+                        <h4 class="tenders-heading-lbl-d">Tenders By Region/Country</h4>
+                        <div class="discip-top-d1">
+                            <p>Tendersontime follows ISO-3166 to classify the countries and geographical regions or the continents. International tenders from all these regions are collected from different primary sources like: Daily newspapers, purchaser's website, tender board websites, and public procurement regulatory authorities. Tendersontime covers all three types of procurement categories viz: Supply tenders or Goods tenders, Works tenders and Service tenders (this also includes consultancy tenders). Register to get a Free Trial of one week.</p>
+                        </div>
                     </div>
                     <div id="Datalisting">
                         {% if posts %}
@@ -33,13 +33,13 @@
                                             <h5>Amount: {{ post.contract_val }} {{ post.contract_currency }}</h5>
                                         </div>
                                         <div class="col-12 col-md-3 data-listing-card-btn-d">
-                                            <a href="http://127.0.0.1:8000/ContractAward/contract-award-detail/{{post.main_url}}" class="data-view-btn" title="{{post.short_descp}}">view details</a>
+                                            <a href="http://127.0.0.1:8000/ContractAward/contract-award-detail/{{ post.short_descp|custom_url:post.id }}" class="data-view-btn" title="{{post.short_descp}}">view details</a>
                                         </div>
                                     </div>
                                 </div>
                             {%endfor%}
                         {% else %}
-                            <h3>no data found</h3>
+                            <h3>No Data Found</h3>
                         {%endif%}
                     </div>
                     <div class="container p-4">
@@ -80,17 +80,19 @@
                         <div class="td-filter-header"><label>Search By Region</label></div>
                         <div class="td-filter-regions">
                             <ul id="treeUL">
-                                {% for region_dic in regions %}
+                                {% for region_dic in "region"|fetch_region_data:"region" %}
                                     <li class="treeli">
-                                        <span class="rootTree rootmain">{{region_dic.region_name}}</span>
+                                        <span class="rootTree rootmain"></span>
+                                        <a href="http://127.0.0.1:8000/ContractAward/region/{{ region_dic.region_name|regions_url_pattern }}">{{region_dic.region_name}}</a>
                                         <ul class="children">
-                                            {% for sub_region_dic in region_dic.region_name|fetch_region_data:"sub_region_name&region_name" %}
+                                            {% for sub_region_dic in region_dic.region_name|fetch_region_data:"sub_region_name&region_name" %} <!-- custom templete funtion fucntion -->
                                                 {% if sub_region_dic.sub_region_name != "" %}
                                                     <li class="treeli">
-                                                        <span class="rootTree rootsub">{{sub_region_dic.sub_region_name}}</span>
+                                                        <span class="rootTree rootsub"></span>
+                                                        <a href="http://127.0.0.1:8000/ContractAward/sub-region/{{ sub_region_dic.sub_region_name|regions_url_pattern }}">{{sub_region_dic.sub_region_name}}</a>
                                                         <ul class="children">
                                                             {% for country in sub_region_dic.sub_region_name|fetch_region_data:"country_name&sub_region_name" %}
-                                                                <li class="treeli">{{country.country_name}}</li>
+                                                            <li class="treeli child-li"><a href="http://127.0.0.1:8000/ContractAward/country/{{ country.country_name|regions_url_pattern }}">{{country.country_name|title}}</a></li> <!-- title is django captilize fucntion -->
                                                             {% endfor %}
                                                         </ul>
                                                     </li>

@@ -87,7 +87,7 @@
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
             },
             success:function(return_data){
-                if(return_data == 'done')
+                if(return_data == 'Done')
                 {
                     window.location = "{% url 'Home' %}";
                 }

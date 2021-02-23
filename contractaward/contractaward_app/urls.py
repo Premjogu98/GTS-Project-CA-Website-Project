@@ -7,5 +7,7 @@ urlpatterns = [
     path('Contact-us', views.conactus_page, name="Contact-Us-Page"),
     path('Tenders', views.Tenders_page, name="Tenders-page"),
     path('contract-award-detail/<tender_title>', views.view_tender_details, name="Tenders-detail"),
-    path('<data>', views.view_tender_details, name="region-search"),
+    path('region/<str:data>', views.region_filter, name="region-search"),
+    path('sub-region/<str:data>', views.region_filter, name="region-search"),
+    path('country/<str:data>', views.region_filter, name="region-search"),
 ]

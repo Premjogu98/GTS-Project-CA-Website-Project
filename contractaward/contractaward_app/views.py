@@ -12,7 +12,7 @@ from django.core.paginator import Paginator
 import re # Need To install Requre.txt
 import base64 # Need To install Requre.txt
 import html
-
+import time
 def find_ip_address():
     endpoint = 'https://ipinfo.io/json'
     response = requests.get(endpoint, verify = True)
@@ -61,9 +61,12 @@ def login_page(request):
         password = request.POST['loginpass']
         print('Username: ',username)
         print('Password: ',password)
-        user_data_found_or_not = fetch_data_query_manage(f"SELECT * FROM tbl_user WHERE email_id ='{str(username)}' AND user_password='{str(password)}'")
+        user_data_found_or_not = fetch_data_query_manage(f'SELECT contact_name,email_id FROM tbl_user WHERE email_id ="{str(username)}" AND user_password="{str(password)}"')
         if len(user_data_found_or_not) == 1:
-            return HttpResponse("done")
+            response = HttpResponse("Done")
+            response.delete_cookie('username')
+            response.set_cookie('username', str(user_data_found_or_not[0]["contact_name"]),max_age=3600)
+            return response
         else:
             return HttpResponse("username or password invalid")
         
@@ -128,59 +131,67 @@ def Tenders_page(request):
                                                 WHERE LENGTH(CA.short_descp) > 5
                                                 ORDER BY CA.id DESC
                                                 LIMIT 0,2""")
-    # print(fetch_CA_data_tup)
-    for i in fetch_CA_data_tup:
-        # print(i["id"])
-        title = genrate_proper_string(str(i['short_descp'].lower()))
-        stop_words = ['a', 'an', 'as', 'at', 'before', 'but', 'by', 'for', 'from', 'is', 'in', 'into','like', 'of', 'off', 'on', 'onto', 'per', 'since', 'than', 'the', 'this', 'that', 'to', 'up','via', 'with']
-        title_list = str(title).split()
-        main_title_list = []
-        [main_title_list.append(i) for i in title_list if i not in stop_words]
-        main_title = " ".join(main_title_list) # list to string 
-        clean_title = main_title[0:100].replace("<br/>","").replace("<br>","")
-        title_replace_multispace = re.sub('\s+', ' ', str(clean_title)) # remove multiple spaces
-        clean_title = re.sub('[^A-Za-z0-9 -]+', '', title_replace_multispace).replace(' ','-').strip()
-        message_bytes = str(i['id']).encode('ascii')
-        base64_bytes = base64.b64encode(message_bytes)
-        base64_id = base64_bytes.decode('ascii')
-        # a_list.append(f"{str(clean_title.replace('---','-').replace('--','-').replace('--','-'))}-{str(base64_id)}")
-        url_dic = {"main_url": f"{str(clean_title.replace('---','-').replace('--','-').replace('--','-'))}-{str(base64_id)}"}
-        i.update(url_dic)
-    # print(main_data_list)
     paginator = Paginator(fetch_CA_data_tup,10)
     try:
         page = int(request.GET.get('page','1'))
     except:
         page = 1
     posts = paginator.page(page)
-    fetch_region_name = fetch_data_query_manage("SELECT region_name FROM `tbl_region` GROUP BY region_name")
-    return render(request, 'htmltemp/tenders_page.html',{"posts":posts,"regions":fetch_region_name})
+    return render(request, 'htmltemp/tenders_page.html',{"posts":posts})
 
 def view_tender_details(request,tender_title="none"):
-    title_id_str_list = str(tender_title).split('-')
-    encoded_tender_id = title_id_str_list[-1]
-    base64_bytes = encoded_tender_id.encode('ascii')
-    message_bytes = base64.b64decode(base64_bytes)
-    decoded_tender_id = message_bytes.decode('ascii')
-    print(f'CA ID: {decoded_tender_id}')
-    fetch_tender_detail = fetch_data_query_manage(f"""SELECT CA.id, CA.short_descp,CA.ref_number,CA.purchasername,CA.purch_country,CA.purchaseradd,CA.purch_email ,CA.purch_url,CA.contractorname ,CA.cont_add,CA.cont_country,CA.cont_email,CA.cont_url,CA.project_location ,CA.award_detail ,CA.contract_val,CA.sector,RE.Country_Name AS purchaser_country ,CRE.Country_Name AS contracter_country ,PROLO.Country_Name AS project_location_country
-                                                    FROM contract_award CA 
-                                                    INNER JOIN tbl_region RE 
-                                                    ON CA.purch_country = RE.Country_Short_Code
-                                                    INNER JOIN tbl_region CRE
-                                                    ON CA.cont_country = CRE.Country_Short_Code
-                                                    INNER JOIN tbl_region PROLO
-                                                    ON CA.project_location = PROLO.Country_Short_Code
-                                                    WHERE CA.id='{str(decoded_tender_id)}'""")
+    if tender_title !="none":
+        title_id_str_list = str(tender_title).split('-')
+        encoded_tender_id = title_id_str_list[-1]
+        base64_bytes = encoded_tender_id.encode('ascii')
+        message_bytes = base64.b64decode(base64_bytes)
+        decoded_tender_id = message_bytes.decode('ascii')
+        print(f'CA ID: {decoded_tender_id}')
+        fetch_tender_detail = fetch_data_query_manage(f"""SELECT CA.id, CA.short_descp,CA.ref_number,CA.purchasername,CA.purch_country,CA.purchaseradd,CA.purch_email ,CA.purch_url,CA.contractorname ,CA.cont_add,CA.cont_country,CA.cont_email,CA.cont_url,CA.project_location ,CA.award_detail ,CA.contract_val,CA.sector,RE.Country_Name AS purchaser_country ,CRE.Country_Name AS contracter_country ,PROLO.Country_Name AS project_location_country
+                                                        FROM contract_award CA 
+                                                        INNER JOIN tbl_region RE 
+                                                        ON CA.purch_country = RE.Country_Short_Code
+                                                        INNER JOIN tbl_region CRE
+                                                        ON CA.cont_country = CRE.Country_Short_Code
+                                                        INNER JOIN tbl_region PROLO
+                                                        ON CA.project_location = PROLO.Country_Short_Code
+                                                        WHERE CA.id='{str(decoded_tender_id)}'""")
+        
+        fetch_tender_detail[0]["purchaseradd"] = html.unescape(str(fetch_tender_detail[0]["purchaseradd"])).replace('&lt;br&gt;','<br>')
+        fetch_tender_detail[0]["cont_add"] = html.unescape(str(fetch_tender_detail[0]["cont_add"])).replace('&lt;br&gt;','<br>')
+        fetch_tender_detail[0]["award_detail"] = html.unescape(str(fetch_tender_detail[0]["award_detail"])).replace('&lt;br&gt;','<br>')
+        # print(fetch_tender_detail)
+        return render(request, 'htmltemp/tender_detail_page.html',{"fetch_tender_detail":fetch_tender_detail})
 
-    # for key, value in fetch_tender_detail:
-    #     # clean_value = re.sub('\s+', ' ', str(value)) # remove multiple spaces
-    #     # clean_value = genrate_proper_string(str(value))
-    #     fetch_tender_detail[0][key] = str(value)
-    #     print(key,value)
-    
-    # fetch_tender_detail[0]["purchaseradd"] = html.unescape(str(fetch_tender_detail[0]["purchaseradd"])).replace('&lt;br&gt;','<br>')
-    fetch_tender_detail[0]["cont_add"] = html.unescape(str(fetch_tender_detail[0]["cont_add"])).replace('&lt;br&gt;','<br>')
-    fetch_tender_detail[0]["award_detail"] = html.unescape(str(fetch_tender_detail[0]["award_detail"])).replace('&lt;br&gt;','<br>')
-    # print(fetch_tender_detail)
-    return render(request, 'htmltemp/tender_detail_page.html',{"fetch_tender_detail":fetch_tender_detail})
+
+def region_filter(request,data="none"):
+    if data != "none":
+        fetch_tender_detail = fetch_data_query_manage(f'SELECT country_short_code FROM tbl_region WHERE region_name="{str(data)}" OR sub_region_name="{str(data)}" OR country_name="{str(data)}" GROUP BY country_short_code')
+        in_query_data = ""
+        for i in fetch_tender_detail:
+            if str(i['country_short_code']) != "":
+                in_query_data += f"'{str(i['country_short_code'])}', "
+        in_query_data = in_query_data.strip().rstrip(',')
+        if in_query_data != "":
+            fetch_tender_detail = fetch_data_query_manage(f"""SELECT CA.id, CA.short_descp, CA.contract_val, CA.contract_currency , RE.Country_Name
+                                                            FROM contract_award CA
+                                                            INNER JOIN tbl_region RE 
+                                                            ON CA.purch_country = RE.Country_Short_Code
+                                                            WHERE CA.purch_country IN ({str(in_query_data)}) ORDER BY CA.purch_country""")
+            paginator = Paginator(fetch_tender_detail,10)
+            try:
+                page = int(request.GET.get('page','1'))
+            except:
+                page = 1
+            posts = paginator.page(page)
+            return render(request, 'htmltemp/tenders_page.html',{"posts":posts})
+        else:
+            fetch_tender_detail = []
+            paginator = Paginator(fetch_tender_detail,10)
+            try:
+                page = int(request.GET.get('page','1'))
+            except:
+                page = 1
+            posts = paginator.page(page)
+            return render(request, 'htmltemp/tenders_page.html',{"posts":posts})
+        

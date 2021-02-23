@@ -58,8 +58,13 @@
                     <li class="nav-items"><a href="{% url 'Tenders-page' %}">Tenders</a></li>
                     <li class="nav-items"><a href="{% url 'Contact-Us-Page' %}">Contact Us</a></li>
                     <li class="nav-items"><a href="#">About Us</a></li>
-                    <li class="nav-items"><a href="{% url 'Login-Page' %}">Login</a></li>
-                    <li class="nav-items"><a href="{% url 'Register-Page' %}"><button id="register-btn">Register Now</button></a></li>
+                    {% if request.COOKIES.username %}
+                        <a class="nav-item mid-nav-item" href="">User Name: {{ request.COOKIES.username }}</a>
+                        <a class="nav-item mid-nav-item" href="">Logout</a>
+                    {% else %}
+                        <li class="nav-items"><a href="{% url 'Login-Page' %}">Login</a></li>
+                        <li class="nav-items"><a href="{% url 'Register-Page' %}"><button id="register-btn">Register Now</button></a></li>
+                    {% endif %}
                 </ul>
             </div>
             </div>
@@ -78,8 +83,12 @@
                 <a class="nav-item mid-nav-item" href="{% url 'Tenders-page' %}">Tenders</a>
                 <a class="nav-item mid-nav-item" href="{% url 'Contact-Us-Page' %}">Contact Us</a>
                 <a class="nav-item mid-nav-item" href="#">About Us</a>
-                <a class="nav-item mid-nav-item" href="{% url 'Login-Page' %}">Login</a>
-                <a class="nav-item mid-nav-item" href="{% url 'Register-Page' %}"><button id="register-btn">Register Now</button></a>
+                {% if request.COOKIES.username %}
+                    <a class="nav-item mid-nav-item" href="#">User Name: {{ request.COOKIES.username }}</a>
+                {% else %}
+                    <a class="nav-item mid-nav-item" href="{% url 'Login-Page' %}">Login</a>
+                    <a class="nav-item mid-nav-item" href="{% url 'Register-Page' %}"><button id="register-btn">Register Now</button></a>
+                {% endif %}
             </li>
             </div>
             </div>
